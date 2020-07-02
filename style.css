@@ -1,0 +1,59 @@
+section {
+    text-align: center;
+    width: 90%;
+    margin: auto;
+    vertical-align: top;
+}
+
+.search-options, .label {
+    display: block;
+    margin: 12px auto;
+}
+
+img {
+    height: 240px;
+    width: 160px;
+}
+
+ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+li {
+    padding: 6px 12px;
+    width: 160px;
+}
+
+.hidden {
+    display: none;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: flex-start;
+}
+
+.item {
+    flex: 1;
+    margin: 0;
+}
+
+/*
+footer {
+    margin: 240px auto 12px auto;
+}
+*/
+@media all and (min-width: 600px) {
+    section {
+        width: 100%;
+    }
+    .group {
+        flex-direction: row;
+        justify-content: center; 
+        align-content: center;
+    }
+} 

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movies and Books</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <header>
+        <section>
+            <h1>Find Your Favorite Movies And Books</h1>
+            <p>
+                <!--Does your movie have a book? What about book you love is made into a movie?-->
+            </p>
+        </section>
+        <section>
+            <form action="">
+                <div class="search-options">
+                    <label for="user-search-title" class="label">Enter the name of the book or the movie</label>
+                    <input id="user-search-title" type="text" placeholder="Title goes here" required>
+                </div>
+                <div class="search-options">
+                    <label for="radio-movie">Movies</label>
+                    <input type="radio" name="choose-type" id="radio-movie" required>
+                    <label for="radio-books">Books</label>
+                    <input type="radio" name="choose-type" id="radio-books" required>
+                    <label for="radio-both">Both</label>
+                    <input type="radio" name="choose-type" id="radio-both" checked required>
+                </div>
+                <div class="search-options">
+                    <button id="button-both" type="submit">Search</button>
+                </div>
+            </form>
+            <p class="searching"></p>
+            <div class="group">
+                <div class="item">
+                    <p class="searching-movies"></p>
+                </div>
+                <div class="item">
+                    <p class="searching-books"></p>
+                </div>
+            </div>
+        </section>
+
+    </header>
+
+
+    <main>
+        <hr>
+
+        <div class="group">
+            <section class="item hidden">
+                <div>
+                    <h2>Movie Results</h2>
+                    <p class="book-search-only"></p>
+                </div>
+                <div>
+                    <ul id="display-movies" class="group">
+                    </ul>
+                </div>
+            </section>
+
+            <section class="item hidden">
+                <div>
+                    <h2>Book Results</h2>
+                    <p class="movie-search-only"></p>
+                </div>
+                <div>
+                    <ul id="display-books" class="group">
+
+                    </ul>
+                </div>
+            </section>
+        </div>
+    </main>
+
+
+    <!-- <footer>
+        <section>
+            <p>Copyrights &copy; Yusuf Alp</p>
+        </section>
+    </footer> -->
+
+    <script src="index.js"></script>
+</body>
+
+</html>
