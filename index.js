@@ -126,7 +126,7 @@ function giveFeedbackOnSubmitBook() {
 
 function getUserSearchTitle() {
     let userSearchTitle = $('#user-search-title').val();
-    return userSearchTitle;
+    return userSearchTitle.toLowerCase();
 }
 
 function waitForSubmit() {
