@@ -9,7 +9,6 @@ function fetchMovieResults(userSearchTitle) {
         .then(res => res.json())
         .then(response => {
             movieResults(response);
-            console.log(response);
         })
         .catch(err => {
             console.log(err);
@@ -27,7 +26,6 @@ function movieResults(response) {
             } else {
                 movieYear = response.d[i].y;
             }
-            console.log(response.d[i].i);
             if (response.d[i].i == undefined) {
                 movieImageUrl = 'https://i.ya-webdesign.com/images/no-image-available-png-2.png'
             } else {
@@ -60,11 +58,14 @@ function fetchBookResults(userSearchTitle){
 function bookResults(response){
     let counter = 0;
     let bookTitle = '', bookYear = '', bookImageUrl = '';
-    console.log(response.items.length);
     for (let i=0; i<response.items.length; i++){
         bookTitle = response.items[i].volumeInfo.title;
         bookYear = response.items[i].volumeInfo.publishedDate;
-        bookImageUrl = response.items[i].volumeInfo.imageLinks.smallThumbnail;
+        if (response.items[i].volumeInfo.imageLinks == undefined){
+            bookImageUrl = 'https://i.ya-webdesign.com/images/no-image-available-png-2.png';
+        } else {
+            bookImageUrl = response.items[i].volumeInfo.imageLinks.smallThumbnail;
+        }
         $('#display-books').append(`
                 <li>
                     <img src='${bookImageUrl}' alt='poster'>
@@ -125,8 +126,9 @@ function giveFeedbackOnSubmitBook() {
 }
 
 function getUserSearchTitle() {
-    let userSearchTitle = $('#user-search-title').val();
-    return userSearchTitle.toLowerCase();
+    let userEntry = $('#user-search-title').val();
+    let userSearchTitle = userEntry.toLowerCase();
+    return userSearchTitle;
 }
 
 function waitForSubmit() {
