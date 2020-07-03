@@ -1,3 +1,5 @@
+let myArray, randomItem;
+
 function fetchMovieResults(userSearchTitle) {
     fetch(`https://imdb8.p.rapidapi.com/title/auto-complete?q=${userSearchTitle}`, {
             "method": "GET",
@@ -17,7 +19,9 @@ function fetchMovieResults(userSearchTitle) {
 
 function movieResults(response) {
     let counter = 0;
-    let movieTitle = '', movieYear = '', movieImageUrl = '';
+    let movieTitle = '',
+        movieYear = '',
+        movieImageUrl = '';
     for (let i = 0; i < response.d.length; i++) {
         if (response.d[i].q == 'feature') {
             movieTitle = response.d[i].l;
@@ -47,21 +51,27 @@ function movieResults(response) {
 
 //------
 
-function fetchBookResults(userSearchTitle){
+function fetchBookResults(userSearchTitle) {
     // Searching Google Book API
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${userSearchTitle}&api_key=AIzaSyDyNOOjF-2YUwE5IeyZTbVT6_XpS737mII`)
-    .then(res => res.json())
-    .then(response => {bookResults(response)})
-    .catch(err => {console.log(err)});
+        .then(res => res.json())
+        .then(response => {
+            bookResults(response)
+        })
+        .catch(err => {
+            console.log(err)
+        });
 }
 
-function bookResults(response){
+function bookResults(response) {
     let counter = 0;
-    let bookTitle = '', bookYear = '', bookImageUrl = '';
-    for (let i=0; i<response.items.length; i++){
+    let bookTitle = '',
+        bookYear = '',
+        bookImageUrl = '';
+    for (let i = 0; i < response.items.length; i++) {
         bookTitle = response.items[i].volumeInfo.title;
         bookYear = response.items[i].volumeInfo.publishedDate;
-        if (response.items[i].volumeInfo.imageLinks == undefined){
+        if (response.items[i].volumeInfo.imageLinks == undefined) {
             bookImageUrl = 'https://i.ya-webdesign.com/images/no-image-available-png-2.png';
         } else {
             bookImageUrl = response.items[i].volumeInfo.imageLinks.smallThumbnail;
@@ -73,7 +83,7 @@ function bookResults(response){
                     <p>${bookYear}</p>
                 </li>
             `);
-            counter++;
+        counter++;
     }
     displayBookResults(counter);
 }
@@ -82,7 +92,7 @@ function displayMovieResults(counter) {
     $('.searching-movies').html(`Total Movies Showing: ${counter}`);
 }
 
-function displayBookResults(counter){
+function displayBookResults(counter) {
     $('.searching-books').html(`Total Books Showing: ${counter}`);
 }
 
@@ -90,7 +100,7 @@ function clearSearchMessageBeforeNew() {
     $('.searching').empty();
 }
 
-function clearSearchMessageResults(){
+function clearSearchMessageResults() {
     $('.searching-movies').empty();
     $('.searching-books').empty();
 }
@@ -107,6 +117,7 @@ function giveFeedbackOnSubmitBoth() {
     fetchMovieResults(getUserSearchTitle());
     $('.searching').empty();
     $('.hidden').removeClass('hidden');
+    // console.log(randomBookMessage);
 }
 
 function giveFeedbackOnSubmitMovie() {
@@ -114,6 +125,7 @@ function giveFeedbackOnSubmitMovie() {
     clearResultsAll();
     fetchMovieResults(getUserSearchTitle());
     $('.searching').empty();
+    $('#display-books').append(`<li>${randomBookMessage}</li>`)
     $('.hidden').removeClass('hidden');
 }
 
@@ -122,6 +134,7 @@ function giveFeedbackOnSubmitBook() {
     clearResultsAll();
     fetchBookResults(getUserSearchTitle());
     $('.searching').empty();
+    $('#display-movies').append(`<li>${randomMovieMessage}</li>`)
     $('.hidden').removeClass('hidden');
 }
 
@@ -135,15 +148,23 @@ function waitForSubmit() {
     $('form').submit(e => {
         e.preventDefault();
         clearSearchMessageBeforeNew();
-        clearSearchMessageResults()
-        if ($('#radio-movie').is(':checked')){
+        clearSearchMessageResults();
+        getRandomMessage();
+        if ($('#radio-movie').is(':checked')) {
             giveFeedbackOnSubmitMovie();
-        } else if ($('#radio-books').is(':checked')){
+        } else if ($('#radio-books').is(':checked')) {
             giveFeedbackOnSubmitBook();
         } else {
             giveFeedbackOnSubmitBoth();
         }
     })
+}
+
+function getRandomMessage() {
+    bookArray = STORE.randomBookMessagesList;
+    movieArray = STORE.randomMovieMessagesList;
+    randomBookMessage = bookArray[Math.floor(Math.random() * bookArray.length)];
+    randomMovieMessage = movieArray[Math.floor(Math.random() * movieArray.length)];
 }
 
 function render() {
