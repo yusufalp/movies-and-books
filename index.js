@@ -1,10 +1,10 @@
 let myArray, randomItem;
 
 function fetchMovieResults(userSearchTitle) {
-    fetch(`https://imdb8.p.rapidapi.com/title/auto-complete?q=${userSearchTitle}`, {
+    fetch(`https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&s=${userSearchTitle}`, {
             "method": "GET",
             "headers": {
-                "x-rapidapi-host": "imdb8.p.rapidapi.com",
+                "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
                 "x-rapidapi-key": "a99206a677msh1633721d3249f95p1cd95ejsn47728a24b280"
             }
         })
@@ -22,18 +22,18 @@ function movieResults(response) {
     let movieTitle = '',
         movieYear = '',
         movieImageUrl = '';
-    for (let i = 0; i < response.d.length; i++) {
-        if (response.d[i].q == 'feature') {
-            movieTitle = response.d[i].l;
-            if (response.d[i].y == undefined) {
+    for (let i = 0; i < response.Search.length; i++) {
+        if (response.Search[i].Type == 'movie') {
+            movieTitle = response.Search[i].Title;
+            if (response.Search[i].Year == undefined) {
                 movieYear = '';
             } else {
-                movieYear = response.d[i].y;
+                movieYear = response.Search[i].Year;
             }
-            if (response.d[i].i == undefined) {
-                movieImageUrl = 'https://i.ya-webdesign.com/images/no-image-available-png-2.png'
+            if (response.Search[i].Poster.startsWith("http")) {
+                movieImageUrl = response.Search[i].Poster;
             } else {
-                movieImageUrl = response.d[i].i.imageUrl;
+                movieImageUrl = 'https://i.ya-webdesign.com/images/no-image-available-png-2.png'
             }
 
             $('#display-movies').append(`
@@ -70,7 +70,11 @@ function bookResults(response) {
         bookImageUrl = '';
     for (let i = 0; i < response.items.length; i++) {
         bookTitle = response.items[i].volumeInfo.title;
-        bookYear = response.items[i].volumeInfo.publishedDate;
+        if (response.items[i].volumeInfo.publishedDate == undefined){
+            bookYear = '';
+        }else {
+            bookYear = response.items[i].volumeInfo.publishedDate;
+        }
         if (response.items[i].volumeInfo.imageLinks == undefined) {
             bookImageUrl = 'https://i.ya-webdesign.com/images/no-image-available-png-2.png';
         } else {
@@ -80,7 +84,7 @@ function bookResults(response) {
                 <li>
                     <img src='${bookImageUrl}' alt='poster'>
                     <p>${bookTitle}</p>
-                    <p>${bookYear}</p>
+                    <p>${bookYear.substring(0,4)}</p>
                 </li>
             `);
         counter++;
@@ -96,8 +100,35 @@ function displayBookResults(counter) {
     $('.searching-books').html(`Total Books Showing: ${counter}`);
 }
 
-function clearSearchMessageBeforeNew() {
+// function clearSearchMessageBeforeNew() {
+//     $('.searching').empty();
+// }
+
+function giveFeedbackOnSubmitBoth() {
+    // $('.searching').html(`Searching movies and books for "${getUserSearchTitle()}"`);
+    clearResultsAll();
+    fetchBookResults(getUserSearchTitle());
+    fetchMovieResults(getUserSearchTitle());
     $('.searching').empty();
+    $('.hidden').removeClass('hidden');
+}
+
+function giveFeedbackOnSubmitMovie() {
+    // $('.searching').html(`Searching movies for "${getUserSearchTitle()}"`);
+    clearResultsAll();
+    fetchMovieResults(getUserSearchTitle());
+    $('.searching').empty();
+    $('#display-books').append(`<li class="random-book-message">${randomBookMessage}</li>`)
+    $('.hidden').removeClass('hidden');
+}
+
+function giveFeedbackOnSubmitBook() {
+    // $('.searching').html(`Searching books for "${getUserSearchTitle()}"`);
+    clearResultsAll();
+    fetchBookResults(getUserSearchTitle());
+    $('.searching').empty();
+    $('#display-movies').append(`<li class="random-movie-message">${randomMovieMessage}</li>`)
+    $('.hidden').removeClass('hidden');
 }
 
 function clearSearchMessageResults() {
@@ -110,44 +141,23 @@ function clearResultsAll() {
     $('#display-books').html('');
 }
 
-function giveFeedbackOnSubmitBoth() {
-    // $('.searching').html(`Searching movies and books for "${getUserSearchTitle()}"`);
-    clearResultsAll();
-    fetchBookResults(getUserSearchTitle());
-    fetchMovieResults(getUserSearchTitle());
-    $('.searching').empty();
-    $('.hidden').removeClass('hidden');
-    // console.log(randomBookMessage);
-}
-
-function giveFeedbackOnSubmitMovie() {
-    // $('.searching').html(`Searching movies for "${getUserSearchTitle()}"`);
-    clearResultsAll();
-    fetchMovieResults(getUserSearchTitle());
-    $('.searching').empty();
-    $('#display-books').append(`<li>${randomBookMessage}</li>`)
-    $('.hidden').removeClass('hidden');
-}
-
-function giveFeedbackOnSubmitBook() {
-    // $('.searching').html(`Searching books for "${getUserSearchTitle()}"`);
-    clearResultsAll();
-    fetchBookResults(getUserSearchTitle());
-    $('.searching').empty();
-    $('#display-movies').append(`<li>${randomMovieMessage}</li>`)
-    $('.hidden').removeClass('hidden');
-}
-
 function getUserSearchTitle() {
     let userEntry = $('#user-search-title').val();
     let userSearchTitle = userEntry.toLowerCase();
     return userSearchTitle;
 }
 
+function getRandomMessage() {
+    bookArray = STORE.randomBookMessagesList;
+    movieArray = STORE.randomMovieMessagesList;
+    randomBookMessage = bookArray[Math.floor(Math.random() * bookArray.length)];
+    randomMovieMessage = movieArray[Math.floor(Math.random() * movieArray.length)];
+}
+
 function waitForSubmit() {
     $('form').submit(e => {
         e.preventDefault();
-        clearSearchMessageBeforeNew();
+        // clearSearchMessageBeforeNew();
         clearSearchMessageResults();
         getRandomMessage();
         if ($('#radio-movie').is(':checked')) {
@@ -160,15 +170,18 @@ function waitForSubmit() {
     })
 }
 
-function getRandomMessage() {
-    bookArray = STORE.randomBookMessagesList;
-    movieArray = STORE.randomMovieMessagesList;
-    randomBookMessage = bookArray[Math.floor(Math.random() * bookArray.length)];
-    randomMovieMessage = movieArray[Math.floor(Math.random() * movieArray.length)];
+function eventListener() {
+    $('.collapse-button-movie').on('click', e => {
+        $('#display-movies').toggleClass('mobile-collapse')
+    });
+    $('.collapse-button-books').on('click', e => {
+        $('#display-books').toggleClass('mobile-collapse')
+    });
 }
 
 function render() {
     waitForSubmit();
+    eventListener();
 }
 
 $(render);

@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Movies and Books</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
+    <script src="https://kit.fontawesome.com/eeee9b5a6a.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -36,7 +37,7 @@
                     <button id="button-both" type="submit">Search</button>
                 </div>
             </form>
-            <p class="searching"></p>
+            <!-- <p class="searching"></p> -->
             <div class="group">
                 <div class="item">
                     <p class="searching-movies"></p>
@@ -46,9 +47,7 @@
                 </div>
             </div>
         </section>
-
     </header>
-
 
     <main>
         <hr>
@@ -56,22 +55,24 @@
         <div class="group">
             <section class="item hidden">
                 <div>
-                    <h2>Movie Results</h2>
+                    <h2>Movie Results<button class="collapse-button-movie"><i class="fas fa-compress-arrows-alt"></i></button></h2>
+                    
                     <p class="book-search-only"></p>
                 </div>
                 <div>
-                    <ul id="display-movies" class="group">
+                    <ul id="display-movies" class="group mobile-collapse">
                     </ul>
                 </div>
             </section>
 
             <section class="item hidden">
                 <div>
-                    <h2>Book Results</h2>
+                    <h2>Book Results<button class="collapse-button-books"><i class="fas fa-compress-arrows-alt"></i></button></h2>
+                    
                     <p class="movie-search-only"></p>
                 </div>
                 <div>
-                    <ul id="display-books" class="group">
+                    <ul id="display-books" class="group mobile-collapse">
 
                     </ul>
                 </div>
@@ -80,11 +81,11 @@
     </main>
 
 
-    <!-- <footer>
+    <footer>
         <section>
             <p>Copyrights &copy; Yusuf Alp</p>
         </section>
-    </footer> -->
+    </footer>
 
     <script src="index.js"></script>
     <script src="store.js"></script>

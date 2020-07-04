@@ -1,3 +1,39 @@
+body {
+    background-color: #eedad1;
+    color: #383e56;
+    font-family: 'Montserrat', sans-serif;
+    /* font-size: 1.2rem; */
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    height: 48px;
+    vertical-align: middle;
+}
+
+p{
+    /* font-size: 1.5rem; */
+}
+
+button {
+    background-color: #f69e7b;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.5rem;
+    padding: 6px 36px;
+}
+
+button:hover {
+    background-color: #d4b5b0;
+}
+
+#user-search-title {
+    font-size: 1.5rem;
+}
+
 section {
     text-align: center;
     width: 90%;
@@ -7,7 +43,7 @@ section {
 
 .search-options, .label {
     display: block;
-    margin: 12px auto;
+    margin: 24px auto;
 }
 
 img {
@@ -29,6 +65,11 @@ li {
     display: none;
 }
 
+.random-book-message, .random-movie-message {
+    font-size: 1.5rem;
+    width:80%;
+}
+
 .group {
     display: flex;
     flex-direction: column;
@@ -42,11 +83,31 @@ li {
     margin: 0;
 }
 
-/*
-footer {
-    margin: 240px auto 12px auto;
+.mobile-collapse {
+    display: none;
 }
-*/
+
+.collapse-button-movie, .collapse-button-books {
+   
+}
+
+.collapse-button-movie, .collapse-button-books {
+    float: right;
+    background-color: #679b9b;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    padding: 12px;
+}
+
+button:hover {
+    background-color: #d4b5b0;
+}
+
+footer {
+    margin: 360px auto 12px auto;
+}
+
 @media all and (min-width: 600px) {
     section {
         width: 100%;
@@ -56,4 +117,13 @@ footer {
         justify-content: center; 
         align-content: center;
     }
+
+    .collapse-button-movie, .collapse-button-books {
+        display: none;
+    }
+
+    .mobile-collapse {
+        display: flex;
+    }
+
 } 
