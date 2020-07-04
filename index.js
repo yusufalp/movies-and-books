@@ -160,7 +160,6 @@ function getRandomMessage() {
 function waitForSubmit() {
     $('form').submit(e => {
         e.preventDefault();
-        // clearSearchMessageBeforeNew();
         clearSearchMessageResults();
         getRandomMessage();
         if ($('#radio-movie').is(':checked')) {

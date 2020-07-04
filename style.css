@@ -2,7 +2,6 @@ body {
     background-color: #eedad1;
     color: #383e56;
     font-family: 'Montserrat', sans-serif;
-    /* font-size: 1.2rem; */
 }
 
 h1 {
@@ -12,10 +11,6 @@ h1 {
 h2 {
     height: 48px;
     vertical-align: middle;
-}
-
-p{
-    /* font-size: 1.5rem; */
 }
 
 button {
@@ -85,10 +80,6 @@ li {
 
 .mobile-collapse {
     display: none;
-}
-
-.collapse-button-movie, .collapse-button-books {
-   
 }
 
 .collapse-button-movie, .collapse-button-books {
