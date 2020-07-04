@@ -1,6 +1,7 @@
 let myArray, randomItem;
 
 function fetchMovieResults(userSearchTitle) {
+    //Searching IMDb API
     fetch(`https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&s=${userSearchTitle}`, {
             "method": "GET",
             "headers": {
@@ -18,6 +19,7 @@ function fetchMovieResults(userSearchTitle) {
 }
 
 function movieResults(response) {
+    //Appending the movie results to the page
     let counter = 0;
     let movieTitle = '',
         movieYear = '',
@@ -64,6 +66,7 @@ function fetchBookResults(userSearchTitle) {
 }
 
 function bookResults(response) {
+    //Appending the Book results to the page
     let counter = 0;
     let bookTitle = '',
         bookYear = '',
@@ -93,61 +96,61 @@ function bookResults(response) {
 }
 
 function displayMovieResults(counter) {
+    //At the top of the book search, show how many successful search are being shown
     $('.searching-movies').html(`Total Movies Showing: ${counter}`);
 }
 
-function displayBookResults(counter) {
+function displayBookResults(counter) {    
+    //At the top of the movie search, show how many successful search are being shown
     $('.searching-books').html(`Total Books Showing: ${counter}`);
 }
 
-// function clearSearchMessageBeforeNew() {
-//     $('.searching').empty();
-// }
-
 function giveFeedbackOnSubmitBoth() {
-    // $('.searching').html(`Searching movies and books for "${getUserSearchTitle()}"`);
+    //Displays both movie and book results
     clearResultsAll();
     fetchBookResults(getUserSearchTitle());
     fetchMovieResults(getUserSearchTitle());
-    $('.searching').empty();
     $('.hidden').removeClass('hidden');
 }
 
 function giveFeedbackOnSubmitMovie() {
-    // $('.searching').html(`Searching movies for "${getUserSearchTitle()}"`);
+    //Displays movie results
     clearResultsAll();
     fetchMovieResults(getUserSearchTitle());
-    $('.searching').empty();
     $('#display-books').append(`<li class="random-book-message">${randomBookMessage}</li>`)
     $('.hidden').removeClass('hidden');
 }
 
 function giveFeedbackOnSubmitBook() {
-    // $('.searching').html(`Searching books for "${getUserSearchTitle()}"`);
+    //Displays book results
     clearResultsAll();
     fetchBookResults(getUserSearchTitle());
-    $('.searching').empty();
     $('#display-movies').append(`<li class="random-movie-message">${randomMovieMessage}</li>`)
     $('.hidden').removeClass('hidden');
 }
 
 function clearSearchMessageResults() {
+    //Clears the number of successful search section before making a new search
     $('.searching-movies').empty();
     $('.searching-books').empty();
 }
 
 function clearResultsAll() {
+    //Clears the results section before making a new search
     $('#display-movies').html('');
     $('#display-books').html('');
 }
 
 function getUserSearchTitle() {
+    //Gets the input from user
     let userEntry = $('#user-search-title').val();
     let userSearchTitle = userEntry.toLowerCase();
     return userSearchTitle;
 }
 
 function getRandomMessage() {
+    //Create random message from the store.js to show if there is a no search in
+    //one of the categories
     bookArray = STORE.randomBookMessagesList;
     movieArray = STORE.randomMovieMessagesList;
     randomBookMessage = bookArray[Math.floor(Math.random() * bookArray.length)];
@@ -171,6 +174,7 @@ function waitForSubmit() {
 }
 
 function eventListener() {
+    //On smaller screens, shows a collapsable button to hide the results at first
     $('.collapse-button-movie').on('click', e => {
         $('#display-movies').toggleClass('mobile-collapse')
     });
