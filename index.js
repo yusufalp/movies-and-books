@@ -3,12 +3,12 @@ let myArray, randomItem;
 function fetchMovieResults(userSearchTitle) {
     //Searching IMDb API
     fetch(`https://movie-database-imdb-alternative.p.rapidapi.com/?page=1&r=json&s=${userSearchTitle}`, {
-            "method": "GET",
-            "headers": {
-                "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
-                "x-rapidapi-key": "a99206a677msh1633721d3249f95p1cd95ejsn47728a24b280"
-            }
-        })
+        "method": "GET",
+        "headers": {
+            "x-rapidapi-host": "movie-database-imdb-alternative.p.rapidapi.com",
+            "x-rapidapi-key": "a99206a677msh1633721d3249f95p1cd95ejsn47728a24b280"
+        }
+    })
         .then(res => res.json())
         .then(response => {
             movieResults(response);
@@ -41,8 +41,8 @@ function movieResults(response) {
             $('#display-movies').append(`
                 <li>
                     <img src='${movieImageUrl}' alt='poster'>
-                    <p>${movieTitle}</p>
                     <p>${movieYear}</p>
+                    <p class="results-title">${movieTitle}</p>
                 </li>
             `);
             counter++;
@@ -73,9 +73,9 @@ function bookResults(response) {
         bookImageUrl = '';
     for (let i = 0; i < response.items.length; i++) {
         bookTitle = response.items[i].volumeInfo.title;
-        if (response.items[i].volumeInfo.publishedDate == undefined){
+        if (response.items[i].volumeInfo.publishedDate == undefined) {
             bookYear = '';
-        }else {
+        } else {
             bookYear = response.items[i].volumeInfo.publishedDate;
         }
         if (response.items[i].volumeInfo.imageLinks == undefined) {
@@ -86,8 +86,8 @@ function bookResults(response) {
         $('#display-books').append(`
                 <li>
                     <img src='${bookImageUrl}' alt='poster'>
-                    <p>${bookTitle}</p>
-                    <p>${bookYear.substring(0,4)}</p>
+                    <p>${bookYear.substring(0, 4)}</p>
+                    <p class="results-title">${bookTitle}</p>
                 </li>
             `);
         counter++;
@@ -100,7 +100,7 @@ function displayMovieResults(counter) {
     $('.searching-movies').html(`Total Movies Showing: ${counter}`);
 }
 
-function displayBookResults(counter) {    
+function displayBookResults(counter) {
     //At the top of the movie search, show how many successful search are being shown
     $('.searching-books').html(`Total Books Showing: ${counter}`);
 }

@@ -36,7 +36,8 @@ section {
     vertical-align: top;
 }
 
-.search-options, .label {
+.search-options,
+.label {
     display: block;
     margin: 24px auto;
 }
@@ -60,9 +61,10 @@ li {
     display: none;
 }
 
-.random-book-message, .random-movie-message {
+.random-book-message,
+.random-movie-message {
     font-size: 1.5rem;
-    width:80%;
+    width: 80%;
 }
 
 .group {
@@ -82,7 +84,8 @@ li {
     display: none;
 }
 
-.collapse-button-movie, .collapse-button-books {
+.collapse-button-movie,
+.collapse-button-books {
     float: right;
     background-color: #679b9b;
     border: none;
@@ -103,13 +106,15 @@ footer {
     section {
         width: 100%;
     }
+
     .group {
         flex-direction: row;
-        justify-content: center; 
+        justify-content: center;
         align-content: center;
     }
 
-    .collapse-button-movie, .collapse-button-books {
+    .collapse-button-movie,
+    .collapse-button-books {
         display: none;
     }
 
@@ -117,4 +122,4 @@ footer {
         display: flex;
     }
 
-} 
+}
