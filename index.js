@@ -166,7 +166,6 @@ function waitForSubmit() {
     $('form').submit(e => {
         e.preventDefault();
         clearSearchMessageResults();
-        // getRandomMessage();
         if ($('#radio-movie').is(':checked')) {
             giveFeedbackOnSubmitMovie();
         } else if ($('#radio-books').is(':checked')) {
