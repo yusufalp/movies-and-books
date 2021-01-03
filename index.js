@@ -51,8 +51,6 @@ function movieResults(response) {
     displayMovieResults(counter);
 }
 
-//------
-
 function fetchBookResults(userSearchTitle) {
     // Searching Google Book API
     fetch(`https://www.googleapis.com/books/v1/volumes?q=${userSearchTitle}&api_key=AIzaSyDyNOOjF-2YUwE5IeyZTbVT6_XpS737mII`)
@@ -117,7 +115,7 @@ function giveFeedbackOnSubmitMovie() {
     //Displays movie results
     clearResultsAll();
     fetchMovieResults(getUserSearchTitle());
-    $('#display-books').append(`<li class="random-book-message">${randomBookMessage}</li>`)
+    $('#display-books').append(`<li class="random-book-message">${getRandomBookMessage()}</li>`)
     $('.hidden').removeClass('hidden');
 }
 
@@ -125,7 +123,7 @@ function giveFeedbackOnSubmitBook() {
     //Displays book results
     clearResultsAll();
     fetchBookResults(getUserSearchTitle());
-    $('#display-movies').append(`<li class="random-movie-message">${randomMovieMessage}</li>`)
+    $('#display-movies').append(`<li class="random-movie-message">${getRandomMovieMessage()}</li>`)
     $('.hidden').removeClass('hidden');
 }
 
@@ -148,20 +146,27 @@ function getUserSearchTitle() {
     return userSearchTitle;
 }
 
-function getRandomMessage() {
+function getRandomBookMessage() {
     //Create random message from the store.js to show if there is a no search in
     //one of the categories
-    bookArray = STORE.randomBookMessagesList;
-    movieArray = STORE.randomMovieMessagesList;
-    randomBookMessage = bookArray[Math.floor(Math.random() * bookArray.length)];
-    randomMovieMessage = movieArray[Math.floor(Math.random() * movieArray.length)];
+    let bookArray = STORE.randomBookMessagesList;
+    let randomBookMessage = bookArray[Math.floor(Math.random() * bookArray.length)];
+    return randomBookMessage;
+}
+
+function getRandomMovieMessage() {
+    //Create random message from the store.js to show if there is a no search in
+    //one of the categories
+    let movieArray = STORE.randomMovieMessagesList;
+    let randomMovieMessage = movieArray[Math.floor(Math.random() * movieArray.length)];
+    return randomMovieMessage;
 }
 
 function waitForSubmit() {
     $('form').submit(e => {
         e.preventDefault();
         clearSearchMessageResults();
-        getRandomMessage();
+        // getRandomMessage();
         if ($('#radio-movie').is(':checked')) {
             giveFeedbackOnSubmitMovie();
         } else if ($('#radio-books').is(':checked')) {
